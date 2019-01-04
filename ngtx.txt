@@ -1,0 +1,2466 @@
++---------------------+----+
+| ime                 | id |
++---------------------+----+
+| Kemija              |  1 |
+| Fizika              |  2 |
+| Knjizevnost         |  3 |
+| Trigonometrija      |  4 |
+| Psihologija         |  5 |
+| Geografjia          |  6 |
+| Likovni             |  7 |
+| Informatika         |  8 |
+| Zdravstvena kultura |  9 |
++---------------------+----+
+9 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO ispit VALUES(
+    -> ('2017-04-02', 'u', 8, 3, NULL),
+    -> ('2018-01-09', 'p', 10, 3, NULL),
+    -> ('2018-09-16', 'u', 6, 3, NULL),
+    -> ('2018-10-10', 'u', 7, 3, NULL),
+    -> ('2018-02-20', 'p', 3, 1, NULL),
+    -> ('2018-07-08', 'p', 8, 1, NULL),
+    -> ('2018-04-13', 'u', 6, 10, NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 8
+MariaDB [ins_bp]> INSERT INTO ispit VALUES
+    -> ('2018-04-13', 'u', 6, 10, NULL);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO ispit VALUES
+    -> ('2017-04-02', 'u', 8, 3, NULL),
+    -> ('2018-01-09', 'p', 10, 3, NULL),
+    -> ('2018-09-16', 'u', 6, 3, NULL),
+    -> ('2018-10-10', 'u', 7, 3, NULL),
+    -> ('2018-02-20', 'p', 3, 1, NULL),
+    -> ('2018-07-08', 'p', 8, 1, NULL),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 7
+MariaDB [ins_bp]> INSERT INTO ispit VALUES
+    -> ('2017-04-02', 'u', 8, 3, NULL),
+    -> ('2018-01-09', 'p', 10, 3, NULL),
+    -> ('2018-09-16', 'u', 6, 3, NULL),
+    -> ('2018-10-10', 'u', 7, 3, NULL),
+    -> ('2018-02-20', 'p', 3, 1, NULL),
+    -> ('2018-07-08', 'p', 8, 1, NULL);
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> INSERT INTO ispit VALUES
+    -> ('2018-01-20', 'p', 9, 8, NULL);
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ispit;
++------------+--------------+----------------+----+----------+
+| datum      | vrsta_ispita | najvisa_ocjena | id | ispit_id |
++------------+--------------+----------------+----+----------+
+| 2018-04-13 | u            |              6 | 10 |        1 |
+| 2017-04-02 | u            |              8 |  3 |        2 |
+| 2018-01-09 | p            |             10 |  3 |        3 |
+| 2018-09-16 | u            |              6 |  3 |        4 |
+| 2018-10-10 | u            |              7 |  3 |        5 |
+| 2018-02-20 | p            |              3 |  1 |        6 |
+| 2018-07-08 | p            |              8 |  1 |        7 |
+| 2018-01-20 | p            |              9 |  8 |        8 |
++------------+--------------+----------------+----+----------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DESCRIBE ocjena;
+ERROR 1146 (42S02): Table 'ins_bp.ocjena' doesn't exist
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispit            |
+| ocjene           |
+| predmet          |
+| prisutnost       |
+| student          |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DESCRIBE ocjene;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| dog_id     | int(10) unsigned | NO   | PRI | NULL    |       |
+| ocijena    | int(11)          | NO   |     | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> ALTER TABLE ocjene CHANGE dog_id ispit_id
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [ins_bp]> ALTER TABLE ocjene CHANGE dog_id ispit_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]> ALTER TABLE ocjene CHANGE dog_id ispit_id INT UNSIGNED NOT NULL;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> DESCRIBE ocjene;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| ispit_id   | int(10) unsigned | NO   | PRI | NULL    |       |
+| ocijena    | int(11)          | NO   |     | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+MariaDB [ins_bp]> INSERT INTO ocjene VALUES
+    -> (1, 3, 9),
+    -> (1, 2, 8),
+    -> (1, 8, 3),
+    -> (2, 3, 10),
+    -> (2, 8, 8),
+    -> (2, 6, 10),
+    -> (2, 1, 9),
+    -> (3, 5, 4),
+    -> (3, 9, 10),
+    -> (3, 4, 8),
+    -> # Nije bio prisutan (3, 5, 4);
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 11
+MariaDB [ins_bp]> INSERT INTO ocjene VALUES
+    -> (1, 3, 9),
+    -> (1, 2, 8),
+    -> (1, 8, 3),
+    -> (2, 3, 10),
+    -> (2, 8, 8),
+    -> (2, 6, 10),
+    -> (2, 1, 9),
+    -> (3, 5, 4),
+    -> (3, 9, 10),
+    -> (3, 4, 8),
+    -> # Nije bio prisutan (3, 5, 4);
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 11
+MariaDB [ins_bp]> INSERT INTO ocjene VALUES
+    -> (1, 3, 9),
+    -> (1, 2, 8),
+    -> (1, 8, 3),
+    -> (2, 3, 10),
+    -> (2, 8, 8),
+    -> (2, 6, 10),
+    -> (2, 1, 9),
+    -> (3, 5, 4),
+    -> (3, 9, 10),
+    -> (3, 4, 8),
+    -> # Nije bio prisutan (3, 5, 4),
+    -> (4, 5, 10);
+Query OK, 11 rows affected (0.00 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+11 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispit            |
+| ocjene           |
+| predmet          |
+| prisutnost       |
+| student          |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DESCRIBE prisutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+MariaDB [ins_bp]> ALERT TABLE prisutnost odsutnost;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ALERT TABLE prisutnost odsutnost' at line 1
+MariaDB [ins_bp]> RENAME prisutnost TO odsutnost;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'prisutnost TO odsutnost' at line 1
+MariaDB [ins_bp]> RENAME table prisutnost to odsutnost;
+Query OK, 0 rows affected (0.05 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispit            |
+| ocjene           |
+| odsutnost        |
+| predmet          |
+| student          |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DESCRIBE odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+2 rows in set (0.03 sec)
+
+MariaDB [ins_bp]> INSERT INTO odsutnost VALUES
+    -> (3, '2018-01-12'),
+    -> (2, '2018-09-16'),
+    -> (3, '2018-10-10');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> SELECT * FROM odsutnost ORDER BY DESC
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESC' at line 1
+MariaDB [ins_bp]> SELECT * FROM odsutnost ORDER BY ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASC' at line 1
+MariaDB [ins_bp]> SELECT student_id FROM odsutnost ORDER BY datum ASC;
++------------+
+| student_id |
++------------+
+|          3 |
+|          2 |
+|          3 |
++------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ORDER BY student_id DESC;
++------------+
+| datum      |
++------------+
+| 2018-10-10 |
+| 2018-01-12 |
+| 2018-09-16 |
++------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT datum from odsutnost ORDER BY datum DESC;
++------------+
+| datum      |
++------------+
+| 2018-10-10 |
+| 2018-09-16 |
+| 2018-01-12 |
++------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ODRER BY datum ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BY datum ASC' at line 1
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ODRER BY datum ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BY datum ASC' at line 1
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ORDER BY ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASC' at line 1
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ORDER BY ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASC' at line 1
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ORDER BY DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESC' at line 1
+MariaDB [ins_bp]> SELECT datum FROM odsutnost ORDER BY datum ASC;
++------------+
+| datum      |
++------------+
+| 2018-01-12 |
+| 2018-09-16 |
+| 2018-10-10 |
++------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispit            |
+| ocjene           |
+| odsutnost        |
+| predmet          |
+| student          |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> describe student;
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+| Field            | Type                  | Null | Key | Default           | Extra                       |
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+| ime_studenta     | varchar(200)          | NO   |     | NULL              |                             |
+| prezime_studenta | varchar(200)          | NO   |     | NULL              |                             |
+| email            | varchar(200)          | YES  |     | NULL              |                             |
+| ulica            | varchar(200)          | NO   |     | NULL              |                             |
+| grad             | varchar(200)          | NO   |     | NULL              |                             |
+| drzava           | char(2)               | NO   |     | ST                |                             |
+| p_broj           | mediumint(8) unsigned | NO   |     | NULL              |                             |
+| mob              | varchar(50)           | NO   |     | NULL              |                             |
+| datum_rod        | date                  | NO   |     | NULL              |                             |
+| spol             | enum('m','z')         | NO   |     | NULL              |                             |
+| datum_upisa      | timestamp             | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| uzina            | float                 | YES  |     | NULL              |                             |
+| student_id       | int(10) unsigned      | NO   | PRI | NULL              | auto_increment              |
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+13 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM student ORDER BY spol DESC;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Mario        | Jakoc            |
+| Postoo       | Hajos            |
+| Terpo        | Zepro            |
+| Makedonce    | Serpoce          |
+| Georte       | Tvro             |
+| Xavmo        | Nevmo            |
++--------------+------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM student WHERE spol REGEXP [m] ORDER BY student_id DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[m] ORDER BY student_id DESC' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM student WHERE spol REGEXP m
+    -> ;
+ERROR 1054 (42S22): Unknown column 'm' in 'where clause'
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM student WHERE spol REGEXP [m];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[m]' at line 1
+MariaDB [ins_bp]> SELECT * FROM student where student_id REGEXP [1-3];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[1-3]' at line 1
+MariaDB [ins_bp]> SELECT * FROM student where student_id = REGEXP [1-3];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'REGEXP [1-3]' at line 1
+MariaDB [ins_bp]> SELECT * FROM student where student_id REGEXP '[1-3]';
++--------------+------------------+------------+---------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email      | ulica   | grad | drzava | p_broj | mob       | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+------------+---------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| Mario        | Jakoc            | jako@m.com | ulica10 | bgrs | BH     |    432 | 01981320  | 1919-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          1 |
+| Postoo       | Hajos            | ghko@m.com | ulica10 | bgrs | RS     |    123 | 045341320 | 1991-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          2 |
+| Terpo        | Zepro            | uiko@m.com | ulica30 | ns   | SL     |    863 | 16534620  | 1951-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          3 |
++--------------+------------------+------------+---------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, grad FROM student WHERE student_id REGEXP [1-3] ORDER BY student_id ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[1-3] ORDER BY student_id ASC' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, grad FROM student WHERE student_id REGEXP '[1-3]' ORDER BY student_id DESC;
++--------------+------------------+------+
+| ime_studenta | prezime_studenta | grad |
++--------------+------------------+------+
+| Terpo        | Zepro            | ns   |
+| Postoo       | Hajos            | bgrs |
+| Mario        | Jakoc            | bgrs |
++--------------+------------------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM STUDENT;
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email              | ulica        | grad | drzava | p_broj | mob       | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| Mario        | Jakoc            | jako@m.com         | ulica10      | bgrs | BH     |    432 | 01981320  | 1919-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          1 |
+| Postoo       | Hajos            | ghko@m.com         | ulica10      | bgrs | RS     |    123 | 045341320 | 1991-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          2 |
+| Terpo        | Zepro            | uiko@m.com         | ulica30      | ns   | SL     |    863 | 16534620  | 1951-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          3 |
+| Makedonce    | Serpoce          | mk@macedonia.com   | ulica50      | t    | MK     |    765 | 00534620  | 1961-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          4 |
+| Georte       | Tvro             | crnogorce@mail.com | crnogorska43 | z    | CG     |    435 | 095090500 | 1985-01-10 | m    | 2019-01-03 21:22:16 |  8.99 |          5 |
+| Xavmo        | Nevmo            | sipal@mail.com     | alban4       | h    | AL     |    585 | 095090500 | 1985-11-10 | m    | 2019-01-03 21:22:16 |  8.99 |          6 |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONTACT (ime_studenta, prezime_studenta) AS student_fullname;
+ERROR 1305 (42000): FUNCTION ins_bp.CONTACT does not exist
+MariaDB [ins_bp]> SELECT CONCAT (ime_studenta, prezime_studenta) AS student_full_name FROM student;
++-------------------+
+| student_full_name |
++-------------------+
+| MarioJakoc        |
+| PostooHajos       |
+| TerpoZepro        |
+| MakedonceSerpoce  |
+| GeorteTvro        |
+| XavmoNevmo        |
++-------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student FROM student;
++-------------------+
+| student           |
++-------------------+
+| Mario Jakoc       |
+| Postoo Hajos      |
+| Terpo Zepro       |
+| Makedonce Serpoce |
+| Georte Tvro       |
+| Xavmo Nevmo       |
++-------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(prezime_studenta, ' ', ime_studenta) AS STUDENT FROM student;
++-------------------+
+| STUDENT           |
++-------------------+
+| Jakoc Mario       |
+| Hajos Postoo      |
+| Zepro Terpo       |
+| Serpoce Makedonce |
+| Tvro Georte       |
+| Nevmo Xavmo       |
++-------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispit            |
+| ocjene           |
+| odsutnost        |
+| predmet          |
+| student          |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> RENAME TABLE ispit TO ispiti
+    ->
+    -> (;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(' at line 3
+MariaDB [ins_bp]> RENAME TABLE ispit TO ispiti,
+    -> predmet to predmeti,
+    -> student to studenti;
+Query OK, 0 rows affected (0.08 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispiti           |
+| ocjene           |
+| odsutnost        |
+| predmeti         |
+| studenti         |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava WHERE drzava REGEXP 'BH';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE drzava REGEXP 'BH'' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava FROM student WHERE drzava REGEXP 'BH';
+ERROR 1146 (42S02): Table 'ins_bp.student' doesn't exist
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava FROM studenti WHERE drzava REGEXP 'BH';
++--------------+------------------+--------+
+| ime_studenta | prezime_studenta | drzava |
++--------------+------------------+--------+
+| Mario        | Jakoc            | BH     |
++--------------+------------------+--------+
+1 row in set (0.01 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT ime_studenta, prezime_studenta, drzava AS Student_iz_BiH FROM studenti WHERE drzava REGEXP 'BH';
+ERROR 1054 (42S22): Unknown column 'CONCAT' in 'field list'
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, prezime_studenta, drzava) AS student_iz_BiH FROM STUDENTI WHERE drzava REGEXP 'BH';
++----------------+
+| student_iz_BiH |
++----------------+
+| MarioJakocBH   |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta, ' ', datum_rod, ' ', email, ' ', spol) AS student_iz_albanije FROM studenti WHERE drzava REGEXP 'AL';
++-----------------------------------------+
+| student_iz_albanije                     |
++-----------------------------------------+
+| Xavmo Nevmo 1985-11-10 sipal@mail.com m |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta, ' ', datum_rod, ' ', email, ' spol = ', spol) AS student iz makedonije FROM studenti WHERE drzava REGEXP 'MK';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'iz makedonije FROM studenti WHERE drzava REGEXP 'MK'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta, ' ', datum_rod, ' ', email, ' spol =  ', spol) AS Student_iz_Makedonije FROM studenti WHERE drzava REGEXP '[M]';
++---------------------------------------------------------+
+| Student_iz_Makedonije                                   |
++---------------------------------------------------------+
+| Makedonce Serpoce 1961-05-19 mk@macedonia.com spol =  m |
++---------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', email) AS Ime i mail studenta id 1-3 FROM studenti WHERE id REGEXP '[0-3]';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'i mail studenta id 1-3 FROM studenti WHERE id REGEXP '[0-3]'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', email) AS IME I MAIL STUD FROM STUDENTI;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'I MAIL STUD FROM STUDENTI' at line 1
+MariaDB [ins_bp]> Select CONCAT(ime_studenta, ' ', email) AS Ime_i_mail_studenta FROM STUDENTI WHERE drzava REGEXP '[0-3]';
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT (ime_studenta, ' ', email) AS Ime_i_email studenta FROM studenti WHERE student_id REGEXP '[0-3]';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'studenta FROM studenti WHERE student_id REGEXP '[0-3]'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', email) AS ime_i_email studenta FROM studenti WHERE student_id REGEXP '[0-3]';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'studenta FROM studenti WHERE student_id REGEXP '[0-3]'' at line 1
+MariaDB [ins_bp]> DESC studenti;
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+| Field            | Type                  | Null | Key | Default           | Extra                       |
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+| ime_studenta     | varchar(200)          | NO   |     | NULL              |                             |
+| prezime_studenta | varchar(200)          | NO   |     | NULL              |                             |
+| email            | varchar(200)          | YES  |     | NULL              |                             |
+| ulica            | varchar(200)          | NO   |     | NULL              |                             |
+| grad             | varchar(200)          | NO   |     | NULL              |                             |
+| drzava           | char(2)               | NO   |     | ST                |                             |
+| p_broj           | mediumint(8) unsigned | NO   |     | NULL              |                             |
+| mob              | varchar(50)           | NO   |     | NULL              |                             |
+| datum_rod        | date                  | NO   |     | NULL              |                             |
+| spol             | enum('m','z')         | NO   |     | NULL              |                             |
+| datum_upisa      | timestamp             | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| uzina            | float                 | YES  |     | NULL              |                             |
+| student_id       | int(10) unsigned      | NO   | PRI | NULL              | auto_increment              |
++------------------+-----------------------+------+-----+-------------------+-----------------------------+
+13 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', uzina) FROM studenti WHERE student_id REGEXP '[0-3]';
++----------------------------------+
+| CONCAT(ime_studenta, ' ', uzina) |
++----------------------------------+
+| Mario 8.99                       |
+| Postoo 8.99                      |
+| Terpo 8.99                       |
++----------------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', uzina) AS test test FROM studenti WHERE stundent_id REGEXP '[0-3]';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'test FROM studenti WHERE stundent_id REGEXP '[0-3]'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', uzina) AS dzak_student FROM STUDENTI where student_id REGEXP '[0-3]' ORDER BY p_broj DESC;
++--------------+
+| dzak_student |
++--------------+
+| Terpo 8.99   |
+| Mario 8.99   |
+| Postoo 8.99  |
++--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM STUDENT;
+ERROR 1146 (42S02): Table 'ins_bp.student' doesn't exist
+MariaDB [ins_bp]> SELECT * from studenti;
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email              | ulica        | grad | drzava | p_broj | mob       | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| Mario        | Jakoc            | jako@m.com         | ulica10      | bgrs | BH     |    432 | 01981320  | 1919-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          1 |
+| Postoo       | Hajos            | ghko@m.com         | ulica10      | bgrs | RS     |    123 | 045341320 | 1991-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          2 |
+| Terpo        | Zepro            | uiko@m.com         | ulica30      | ns   | SL     |    863 | 16534620  | 1951-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          3 |
+| Makedonce    | Serpoce          | mk@macedonia.com   | ulica50      | t    | MK     |    765 | 00534620  | 1961-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          4 |
+| Georte       | Tvro             | crnogorce@mail.com | crnogorska43 | z    | CG     |    435 | 095090500 | 1985-01-10 | m    | 2019-01-03 21:22:16 |  8.99 |          5 |
+| Xavmo        | Nevmo            | sipal@mail.com     | alban4       | h    | AL     |    585 | 095090500 | 1985-11-10 | m    | 2019-01-03 21:22:16 |  8.99 |          6 |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student_test FROM studenti WHERE YEAR(datum_rod) > 1968;
++--------------+
+| student_test |
++--------------+
+| Postoo Hajos |
+| Georte Tvro  |
+| Xavmo Nevmo  |
++--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email FROM studenti WHERE MONTH(datum_rod) > 10;
++--------------+------------------+----------------+
+| ime_studenta | prezime_studenta | email          |
++--------------+------------------+----------------+
+| Xavmo        | Nevmo            | sipal@mail.com |
++--------------+------------------+----------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email FROM studenti WHERE MONTH(datum_rod) > 2 && WHERE YEAR(datum_rod) < 1991;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE YEAR(datum_rod) < 1991' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email FROM studenti WHERE MONTH(datum_rod) > 2 || YEAR(datum_rod) < 1991;
++--------------+------------------+--------------------+
+| ime_studenta | prezime_studenta | email              |
++--------------+------------------+--------------------+
+| Mario        | Jakoc            | jako@m.com         |
+| Postoo       | Hajos            | ghko@m.com         |
+| Terpo        | Zepro            | uiko@m.com         |
+| Makedonce    | Serpoce          | mk@macedonia.com   |
+| Georte       | Tvro             | crnogorce@mail.com |
+| Xavmo        | Nevmo            | sipal@mail.com     |
++--------------+------------------+--------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email FROM student WHERE YEAR(datum_rod) > 1989 && uzina > 7.99;
+ERROR 1146 (42S02): Table 'ins_bp.student' doesn't exist
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email FROM studenti WHERE YEAR(datum_rod) > 1990 && uzina <= 9;
++--------------+------------------+------------+
+| ime_studenta | prezime_studenta | email      |
++--------------+------------------+------------+
+| Postoo       | Hajos            | ghko@m.com |
++--------------+------------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava FROM studenti WHERE drzava REGEXP 'BH' OR uzina <= 9.1;
++--------------+------------------+--------+
+| ime_studenta | prezime_studenta | drzava |
++--------------+------------------+--------+
+| Mario        | Jakoc            | BH     |
+| Postoo       | Hajos            | RS     |
+| Terpo        | Zepro            | SL     |
+| Makedonce    | Serpoce          | MK     |
+| Georte       | Tvro             | CG     |
+| Xavmo        | Nevmo            | AL     |
++--------------+------------------+--------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava FROM studenti WHERE drzava REGEXP 'BH' AND uzina = 8.99;
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina FROM studenti;
++-------+
+| uzina |
++-------+
+|  8.99 |
+|  8.99 |
+|  8.99 |
+|  8.99 |
+|  8.99 |
+|  8.99 |
++-------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava FROM studenti WHERE drzava REGEXP 'BH' AND uzina < 9.1;
++--------------+------------------+--------+
+| ime_studenta | prezime_studenta | drzava |
++--------------+------------------+--------+
+| Mario        | Jakoc            | BH     |
++--------------+------------------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> UPDATE set prezime_studenta Bosancic FROM studenti WHERE drzava REGEXP 'BH';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'set prezime_studenta Bosancic FROM studenti WHERE drzava REGEXP 'BH'' at line 1
+MariaDB [ins_bp]> UPDATE SET prezime_studenta = Bosancic FROM studenti WHERE drzava REXEXP 'BH';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SET prezime_studenta = Bosancic FROM studenti WHERE drzava REXEXP 'BH'' at line 1
+MariaDB [ins_bp]> UPDATE SET prezime_studenta Bosancic FROM studenti WHERE drzava = 'BH';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SET prezime_studenta Bosancic FROM studenti WHERE drzava = 'BH'' at line 1
+MariaDB [ins_bp]> UPDATE studenti SET prezime_studenta = Bosancic, WHERE drzava REGEXP 'BH';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE drzava REGEXP 'BH'' at line 1
+MariaDB [ins_bp]> UPDATE studenti SET prezime_studenta = 'Bosancic' WHERE drzava REGEXP 'BH';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [ins_bp]> SELECT * from student WHERE prezime_studenta REGEXP 'Bosancic';
+ERROR 1146 (42S02): Table 'ins_bp.student' doesn't exist
+MariaDB [ins_bp]> SELECT * FROM studenti WHERE preziem_studenta REGEXP 'Bosancic';
+ERROR 1054 (42S22): Unknown column 'preziem_studenta' in 'where clause'
+MariaDB [ins_bp]> SELECT * FROM studenti WHERE prezime_studenta REGEXP 'Bosancic';
++--------------+------------------+------------+---------+------+--------+--------+----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email      | ulica   | grad | drzava | p_broj | mob      | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+------------+---------+------+--------+--------+----------+------------+------+---------------------+-------+------------+
+| Mario        | Bosancic         | jako@m.com | ulica10 | bgrs | BH     |    432 | 01981320 | 1919-05-19 | m    | 2019-01-04 12:57:21 |  8.99 |          1 |
++--------------+------------------+------------+---------+------+--------+--------+----------+------------+------+---------------------+-------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Mario        | Bosancic         |
+| Postoo       | Hajos            |
+| Terpo        | Zepro            |
+| Makedonce    | Serpoce          |
+| Georte       | Tvro             |
+| Xavmo        | Nevmo            |
++--------------+------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student FROM studenti WHERE drzava != 'BH';
++-------------------+
+| student           |
++-------------------+
+| Postoo Hajos      |
+| Terpo Zepro       |
+| Makedonce Serpoce |
+| Georte Tvro       |
+| Xavmo Nevmo       |
++-------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student FROM studenti WHERE drzava REGEXP '^BH';
++----------------+
+| student        |
++----------------+
+| Mario Bosancic |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student FROM studenti WHERE drzava REGEXP '[^BH]';
++-------------------+
+| student           |
++-------------------+
+| Postoo Hajos      |
+| Terpo Zepro       |
+| Makedonce Serpoce |
+| Georte Tvro       |
+| Xavmo Nevmo       |
++-------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS student FROM studenti WHERE DAY(datum_rod) >= 8 AND (drzava REGEXP 'HR' || drzava REGEXP 'MK');
++-------------------+
+| student           |
++-------------------+
+| Makedonce Serpoce |
++-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM studenti;
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email              | ulica        | grad | drzava | p_broj | mob       | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| Mario        | Bosancic         | jako@m.com         | ulica10      | bgrs | BH     |    432 | 01981320  | 1919-05-19 | m    | 2019-01-04 12:57:21 |  8.99 |          1 |
+| Postoo       | Hajos            | ghko@m.com         | ulica10      | bgrs | RS     |    123 | 045341320 | 1991-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          2 |
+| Terpo        | Zepro            | uiko@m.com         | ulica30      | ns   | SL     |    863 | 16534620  | 1951-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          3 |
+| Makedonce    | Serpoce          | mk@macedonia.com   | ulica50      | t    | MK     |    765 | 00534620  | 1961-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          4 |
+| Georte       | Tvro             | crnogorce@mail.com | crnogorska43 | z    | CG     |    435 | 095090500 | 1985-01-10 | m    | 2019-01-03 21:22:16 |  8.99 |          5 |
+| Xavmo        | Nevmo            | sipal@mail.com     | alban4       | h    | AL     |    585 | 095090500 | 1985-11-10 | m    | 2019-01-03 21:22:16 |  8.99 |          6 |
++--------------+------------------+--------------------+--------------+------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO studenti VALUES('Hrvoje', 'Bazdarevic', 'hbaz@mail.com', 'Trg BiH 10', 'HR', 930, 003851234325, '1990-05-28', NOW(), 6.10, NULL);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [ins_bp]> INSERT INTO studenti VALUES('Hrvoje', 'Bazdarevic', 'hbaz@mail.com', 'Trg BiH 10', 'Livada' 'HR', 930, 003851234325, '1990-05-28', NOW(), 6.10, NULL);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [ins_bp]> INSERT INTO studenti VALUES('Hrvoje', 'Bazdarevic', 'hbaz@mail.com', 'Trogirska 13b/h', 'Nin', 'HR', 930, 003234325, '1990-05-28', NOW(), 6.10, NULL);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [ins_bp]> INSERT INTO STUDENTI values(
+    -> 'Tihomir', 'Crnomic', 'tcrmic@mail.com', 'Bestinska 10/9bc', 'Nin', 'HR', 492, 93845340, '1990-01-29', 'm', NOW(), 4.5, NULL);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO VALUES('Ruzica', 'Pulnikovic' 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', 'BH', 954, 54674567, '1999-09-06', 'z', NOW(), 6.8, NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'VALUES('Ruzica', 'Pulnikovic' 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', 'B' at line 1
+MariaDB [ins_bp]> INSERT INTO VALUES('Ruzica', 'Pulnikovic', 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', 'BH', 954, 54674567, '1999-09-06', 'z', NOW(), 6.8, NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'VALUES('Ruzica', 'Pulnikovic', 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', '' at line 1
+MariaDB [ins_bp]> INSERT INTO studenti VALUES('Ruzica', 'Pulnikovic', 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', 'BH', 954, 54674567, '1999-09-06', 'z', NOW(), 6.8, NULL);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM studenti WHERE spol REGEXP 'z';
++--------------+------------------+------------------+-----------------+-------+--------+--------+----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email            | ulica           | grad  | drzava | p_broj | mob      | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+------------------+-----------------+-------+--------+--------+----------+------------+------+---------------------+-------+------------+
+| Ruzica       | Pulnikovic       | ruzinmail@hr.com | Poljanska 30/j4 | Doboj | BH     |    954 | 54674567 | 1999-09-06 | z    | 2019-01-04 13:10:42 |   6.8 |          8 |
++--------------+------------------+------------------+-----------------+-------+--------+--------+----------+------------+------+---------------------+-------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT (ime_studenta, ' ' prezime_studenta) AS ruzica_si_moja FROM studenti WHERE p_broj = 954;
+ERROR 1583 (42000): Incorrect parameters in the call to native function 'CONCAT'
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS Ruza FROM studenti WHERE p_broj = 954;
++-------------------+
+| Ruza              |
++-------------------+
+| Ruzica Pulnikovic |
++-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta WHERE id is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE id is not null' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti WHERE id IS NOT NULL;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+MariaDB [ins_bp]> SELECT ime_studenta, prezim_studenta FROM studenti WHERE id IS NOT NULL;
+ERROR 1054 (42S22): Unknown column 'prezim_studenta' in 'field list'
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti WHERE prezime_studenta IS NOT NULL;
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Georte       |
+| Xavmo        |
+| Tihomir      |
+| Ruzica       |
++--------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti WHERE id IS NOT NULL;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+MariaDB [ins_bp]> SELECT CONCAT (ime_studenta, ' ', prezime_studenta) AS Student FROM studenti WHERE student_id IS NOT NULL ORDER BY student_id DESC;
++-------------------+
+| Student           |
++-------------------+
+| Ruzica Pulnikovic |
+| Tihomir Crnomic   |
+| Xavmo Nevmo       |
+| Georte Tvro       |
+| Makedonce Serpoce |
+| Terpo Zepro       |
+| Postoo Hajos      |
+| Mario Bosancic    |
++-------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti ORDER BY drzava DESC, student_id ASC;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Terpo        | Zepro            |
+| Postoo       | Hajos            |
+| Makedonce    | Serpoce          |
+| Tihomir      | Crnomic          |
+| Georte       | Tvro             |
+| Mario        | Bosancic         |
+| Ruzica       | Pulnikovic       |
+| Xavmo        | Nevmo            |
++--------------+------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava, student_id FROM studenti ORDER BY drzava DESC, student_id ASC;
++--------------+------------------+--------+------------+
+| ime_studenta | prezime_studenta | drzava | student_id |
++--------------+------------------+--------+------------+
+| Terpo        | Zepro            | SL     |          3 |
+| Postoo       | Hajos            | RS     |          2 |
+| Makedonce    | Serpoce          | MK     |          4 |
+| Tihomir      | Crnomic          | HR     |          7 |
+| Georte       | Tvro             | CG     |          5 |
+| Mario        | Bosancic         | BH     |          1 |
+| Ruzica       | Pulnikovic       | BH     |          8 |
+| Xavmo        | Nevmo            | AL     |          6 |
++--------------+------------------+--------+------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, drzava, student_id FROM studenti ORDER BY drzava DESC, student_id DESC;
++--------------+------------------+--------+------------+
+| ime_studenta | prezime_studenta | drzava | student_id |
++--------------+------------------+--------+------------+
+| Terpo        | Zepro            | SL     |          3 |
+| Postoo       | Hajos            | RS     |          2 |
+| Makedonce    | Serpoce          | MK     |          4 |
+| Tihomir      | Crnomic          | HR     |          7 |
+| Georte       | Tvro             | CG     |          5 |
+| Ruzica       | Pulnikovic       | BH     |          8 |
+| Mario        | Bosancic         | BH     |          1 |
+| Xavmo        | Nevmo            | AL     |          6 |
++--------------+------------------+--------+------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti LIMIT 4;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Mario        | Bosancic         |
+| Postoo       | Hajos            |
+| Terpo        | Zepro            |
+| Makedonce    | Serpoce          |
++--------------+------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) FROM studenti LIMIT 4-6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-6' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) FROM studenti LIMIT 4, 6;
++---------------------------------------------+
+| CONCAT(ime_studenta, ' ', prezime_studenta) |
++---------------------------------------------+
+| Georte Tvro                                 |
+| Xavmo Nevmo                                 |
+| Tihomir Crnomic                             |
+| Ruzica Pulnikovic                           |
++---------------------------------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti limit 1,3;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Postoo       | Hajos            |
+| Terpo        | Zepro            |
+| Makedonce    | Serpoce          |
++--------------+------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti limit 4,6;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Georte       | Tvro             |
+| Xavmo        | Nevmo            |
+| Tihomir      | Crnomic          |
+| Ruzica       | Pulnikovic       |
++--------------+------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti;
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Georte       |
+| Xavmo        |
+| Tihomir      |
+| Ruzica       |
++--------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti LIMIT 4,1;
++--------------+
+| ime_studenta |
++--------------+
+| Georte       |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti LIMIT 4,2;
++--------------+
+| ime_studenta |
++--------------+
+| Georte       |
+| Xavmo        |
++--------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT DISTINC ime_studenta, prezime_studenta FROM studenti;
+ERROR 1054 (42S22): Unknown column 'DISTINC' in 'field list'
+MariaDB [ins_bp]> SELECT DISTINCT ime_studenta, prezime_studenta FROM STUDENTI;
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Mario        | Bosancic         |
+| Postoo       | Hajos            |
+| Terpo        | Zepro            |
+| Makedonce    | Serpoce          |
+| Georte       | Tvro             |
+| Xavmo        | Nevmo            |
+| Tihomir      | Crnomic          |
+| Ruzica       | Pulnikovic       |
++--------------+------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO studenti VALUES('Ruzica', 'Pulnikovic', 'ruzinmail@hr.com', 'Poljanska 30/j4', 'Doboj', 'BH', 954, 54674567, '1999-09-06', 'z', NOW(), 6.8, NULL);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti;
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Georte       |
+| Xavmo        |
+| Tihomir      |
+| Ruzica       |
+| Ruzica       |
++--------------+
+9 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT DISTINCT ime_studenta FROM studenti;
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Georte       |
+| Xavmo        |
+| Tihomir      |
+| Ruzica       |
++--------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DELETE FROM studenti WHERE ime_studenta REGEXP 'ruzica' && student_id = 9;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM studenti;
++--------------+------------------+--------------------+------------------+-------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| ime_studenta | prezime_studenta | email              | ulica            | grad  | drzava | p_broj | mob       | datum_rod  | spol | datum_upisa         | uzina | student_id |
++--------------+------------------+--------------------+------------------+-------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+| Mario        | Bosancic         | jako@m.com         | ulica10          | bgrs  | BH     |    432 | 01981320  | 1919-05-19 | m    | 2019-01-04 12:57:21 |  8.99 |          1 |
+| Postoo       | Hajos            | ghko@m.com         | ulica10          | bgrs  | RS     |    123 | 045341320 | 1991-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          2 |
+| Terpo        | Zepro            | uiko@m.com         | ulica30          | ns    | SL     |    863 | 16534620  | 1951-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          3 |
+| Makedonce    | Serpoce          | mk@macedonia.com   | ulica50          | t     | MK     |    765 | 00534620  | 1961-05-19 | m    | 2019-01-03 21:22:16 |  8.99 |          4 |
+| Georte       | Tvro             | crnogorce@mail.com | crnogorska43     | z     | CG     |    435 | 095090500 | 1985-01-10 | m    | 2019-01-03 21:22:16 |  8.99 |          5 |
+| Xavmo        | Nevmo            | sipal@mail.com     | alban4           | h     | AL     |    585 | 095090500 | 1985-11-10 | m    | 2019-01-03 21:22:16 |  8.99 |          6 |
+| Tihomir      | Crnomic          | tcrmic@mail.com    | Bestinska 10/9bc | Nin   | HR     |    492 | 93845340  | 1990-01-29 | m    | 2019-01-04 13:08:20 |   4.5 |          7 |
+| Ruzica       | Pulnikovic       | ruzinmail@hr.com   | Poljanska 30/j4  | Doboj | BH     |    954 | 54674567  | 1999-09-06 | z    | 2019-01-04 13:10:42 |   6.8 |          8 |
++--------------+------------------+--------------------+------------------+-------+--------+--------+-----------+------------+------+---------------------+-------+------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, student_id FROM studenti;
++--------------+------------+
+| ime_studenta | student_id |
++--------------+------------+
+| Mario        |          1 |
+| Postoo       |          2 |
+| Terpo        |          3 |
+| Makedonce    |          4 |
+| Georte       |          5 |
+| Xavmo        |          6 |
+| Tihomir      |          7 |
+| Ruzica       |          8 |
++--------------+------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Ime i prezime', CONCAT(drzava, ' ', spol) AS 'Drzava - spol' FROM studenti;
++-------------------+---------------+
+| Ime i prezime     | Drzava - spol |
++-------------------+---------------+
+| Mario Bosancic    | BH m          |
+| Postoo Hajos      | RS m          |
+| Terpo Zepro       | SL m          |
+| Makedonce Serpoce | MK m          |
+| Georte Tvro       | CG m          |
+| Xavmo Nevmo       | AL m          |
+| Tihomir Crnomic   | HR m          |
+| Ruzica Pulnikovic | BH z          |
++-------------------+---------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Ime i prezime', CONCAT(drzava, ' ', grad) AS 'Mjesto' FROM STUDENTI;
++-------------------+----------+
+| Ime i prezime     | Mjesto   |
++-------------------+----------+
+| Mario Bosancic    | BH bgrs  |
+| Postoo Hajos      | RS bgrs  |
+| Terpo Zepro       | SL ns    |
+| Makedonce Serpoce | MK t     |
+| Georte Tvro       | CG z     |
+| Xavmo Nevmo       | AL h     |
+| Tihomir Crnomic   | HR Nin   |
+| Ruzica Pulnikovic | BH Doboj |
++-------------------+----------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM Studenti WHERE ime_studenta REGEXP '%M' OR prezime_studenta REGEXP '%s%;
+    '> ;
+    '>
+    '> ok;
+    '> wer;
+    '> v
+    '> .,:;;
+    '> vo
+    '>
+    '> v
+    '> v
+    '> v
+    '>
+    '> v
+    '> v
+    '> oko
+    '>
+    '> ; );
+    '> ;);;;;;;);
+    '> close
+    '> exit
+    '> quit
+    '> close
+    '> insert;
+    '> into;
+    '> ;);
+    '> Ctrl-C -- exit!
+Bye
+
+C:\xampp\mysql\bin>mysql -u root -p -h 127.0.0.1
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 73
+Server version: 10.1.31-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| bravo              |
+| cms                |
+| cmstc              |
+| datasens           |
+| drugadatabase      |
+| fakultet           |
+| information_schema |
+| ins_bp             |
+| ispitsql           |
+| knjiznica          |
+| logbaz             |
+| mysql              |
+| novadb             |
+| pdo_db             |
+| performance_schema |
+| php2018            |
+| phpmyadmin         |
+| sec_log            |
+| skladiste          |
+| skladiste2         |
+| turnir             |
+| videoteka          |
+| zaposlenici        |
++--------------------+
+23 rows in set (0.00 sec)
+
+MariaDB [(none)]> USE ins_bp;
+Database changed
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP '%M' || prezime_studenta '%s%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''%s%'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP '%M' || prezime_studenta REGEXP '%s%';
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP 'M%' || prezime_studenta REGEXP '%b%';
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP 'M%';
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta from Studenti;
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Georte       |
+| Xavmo        |
+| Tihomir      |
+| Ruzica       |
++--------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta LIKE 'M%';
++-------------------+
+| Student           |
++-------------------+
+| Mario Bosancic    |
+| Makedonce Serpoce |
++-------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP '/M%/';
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP M%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP "M%";
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP "\M%";
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM Studenti WHERE ime_studenta REGEX '[%M]';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'REGEX '[%M]'' at line 1
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM Studenti WHERE ime_studenta REGEXP '[%M]';
++-------------------+
+| Student           |
++-------------------+
+| Mario Bosancic    |
+| Makedonce Serpoce |
+| Xavmo Nevmo       |
+| Tihomir Crnomic   |
++-------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student? FROM studenti WHERE ime_studenta REGEXP '^[M]';
+    '> ;
+    '>
+    '>
+    '>
+    '>
+    '> Ctrl-C -- exit!
+Bye
+
+C:\xampp\mysql\bin>mysql -u root -p -h 127.0.0.1
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 90
+Server version: 10.1.31-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> USE ins_bp;
+Database changed
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta) AS 'Student' FROM studenti WHERE ime_studenta REGEXP '^[M]';
++-------------------+
+| Student           |
++-------------------+
+| Mario Bosancic    |
+| Makedonce Serpoce |
++-------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]>
+MariaDB [ins_bp]> SELECT CONCAT (ime_studenta, ' ', prezime_studenta) AS 'Studend' FROM studenti WHERE ime_studenta
+    -> REGEXP '^[M]' && prezime_studenta REGEXP '^[B]';
++----------------+
+| Studend        |
++----------------+
+| Mario Bosancic |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM student WHERE ime_studenta REGEXP '....o';
+ERROR 1146 (42S02): Table 'ins_bp.student' doesn't exist
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti WHERE ime_studenta REGEXP '....o';
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Postoo       |
+| Terpo        |
+| Makedonce    |
+| Xavmo        |
++--------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti WHERE ime_studenta LIKE '____o';
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
+| Terpo        |
+| Xavmo        |
++--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta FROM studenti WHERE ime_studenta LIKE 'M___o';
++--------------+
+| ime_studenta |
++--------------+
+| Mario        |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT DISTINCT ime_studenta, prezime_studenta, drzava FROM studenti ORDER BY drzava DESC;
++--------------+------------------+--------+
+| ime_studenta | prezime_studenta | drzava |
++--------------+------------------+--------+
+| Terpo        | Zepro            | SL     |
+| Postoo       | Hajos            | RS     |
+| Makedonce    | Serpoce          | MK     |
+| Tihomir      | Crnomic          | HR     |
+| Georte       | Tvro             | CG     |
+| Mario        | Bosancic         | BH     |
+| Ruzica       | Pulnikovic       | BH     |
+| Xavmo        | Nevmo            | AL     |
++--------------+------------------+--------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT DISTINC drzava FROM studenti;
+ERROR 1054 (42S22): Unknown column 'DISTINC' in 'field list'
+MariaDB [ins_bp]> SELECT DISTINC drzava FROM studenti ORDER BY drzava ASC;
+ERROR 1054 (42S22): Unknown column 'DISTINC' in 'field list'
+MariaDB [ins_bp]> SELECT DISTINCT drzava FROM studenti;
++--------+
+| drzava |
++--------+
+| BH     |
+| RS     |
+| SL     |
+| MK     |
+| CG     |
+| AL     |
+| HR     |
++--------+
+7 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT DISTINCT ime_studenta, prezime_studenta, drzava FROM studenti ORDER BY student_id DESC;
++--------------+------------------+--------+
+| ime_studenta | prezime_studenta | drzava |
++--------------+------------------+--------+
+| Ruzica       | Pulnikovic       | BH     |
+| Tihomir      | Crnomic          | HR     |
+| Xavmo        | Nevmo            | AL     |
+| Georte       | Tvro             | CG     |
+| Makedonce    | Serpoce          | MK     |
+| Terpo        | Zepro            | SL     |
+| Postoo       | Hajos            | RS     |
+| Mario        | Bosancic         | BH     |
++--------------+------------------+--------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti DISTINCT drzava;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DISTINCT drzava' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti DISTINCT drzava;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DISTINCT drzava' at line 1
+MariaDB [ins_bp]> SELECT COUNT(DISTINCT drzava);
+ERROR 1054 (42S22): Unknown column 'drzava' in 'field list'
+MariaDB [ins_bp]> SELECT COUNT (DISTINCT drzava) FROM studenti);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DISTINCT drzava) FROM studenti)' at line 1
+MariaDB [ins_bp]> SELECT COUNT(DISTINCT drzava) FROM studenti;
++------------------------+
+| COUNT(DISTINCT drzava) |
++------------------------+
+|                      7 |
++------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(COUNT(DISTINCT drzava)) AS 'Zbroj drzava' FROM studenti;
++--------------+
+| Zbroj drzava |
++--------------+
+| 7            |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT COUNT(*);
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT COUNT(*) FROM studenti;
++----------+
+| COUNT(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(COUNT('m')) FROM studenti;
++--------------------+
+| CONCAT(COUNT('m')) |
++--------------------+
+| 8                  |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(COUNT('z')) AS 'Female' FROM studenti;
++--------+
+| Female |
++--------+
+| 8      |
++--------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(COUNT(*)) AS 'Zene' FROM studenti WHERE spol REGEXP 'm';
++------+
+| Zene |
++------+
+| 7    |
++------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(COUNT(*)) AS 'Zene' FROM studenti WHERE spol REGEXP 'z';
++------+
+| Zene |
++------+
+| 1    |
++------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT spol, CONCAT(COUNT(*)) AS 'Ukupno' FROM studenti GROUP BY spol;
++------+--------+
+| spol | Ukupno |
++------+--------+
+| m    | 7      |
+| z    | 1      |
++------+--------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, CONCAT(COUNT(*)) AS 'Ukupan broj studenata' GROUP by student_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'GROUP by student_id' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, CONCAT(COUNT(*)) AS 'Ukupan broj studenata' FROM studenti GROUP BY student_id;
++--------------+-----------------------+
+| ime_studenta | Ukupan broj studenata |
++--------------+-----------------------+
+| Mario        | 1                     |
+| Postoo       | 1                     |
+| Terpo        | 1                     |
+| Makedonce    | 1                     |
+| Georte       | 1                     |
+| Xavmo        | 1                     |
+| Tihomir      | 1                     |
+| Ruzica       | 1                     |
++--------------+-----------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT MONTH(datum_rod) as 'Mjesec', COUNT(*)
+    -> FROM STUDENTI
+    -> GROUP BY Month
+    -> ORDER BY Month;
+ERROR 1054 (42S22): Unknown column 'Month' in 'order clause'
+MariaDB [ins_bp]> SELECT Month(datum_rod) AS 'Mjesec', COUNT(*) FROM STUDENTI GROUP BY Month ORDER BY Month;
+ERROR 1054 (42S22): Unknown column 'Month' in 'order clause'
+MariaDB [ins_bp]> SELECT Month(datum_rod) AS 'Month', COUNT(*) FROM studenti GROUP BY Month ORDER BY Month;
++-------+----------+
+| Month | COUNT(*) |
++-------+----------+
+|     1 |        2 |
+|     5 |        4 |
+|     9 |        1 |
+|    11 |        1 |
++-------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT Month(datum_rod) AS 'Month', COUNT(*) FROM studenti GROUP BY Month ORDER BY Month AS 'Mjeseci';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS 'Mjeseci'' at line 1
+MariaDB [ins_bp]> SELECT Month(datum_rod) AS 'Month', COUNT(*) FROM studenti GROUP BY Month ORDER BY Month;
++-------+----------+
+| Month | COUNT(*) |
++-------+----------+
+|     1 |        2 |
+|     5 |        4 |
+|     9 |        1 |
+|    11 |        1 |
++-------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT Year(datum_rod) from Studenti;
++-----------------+
+| Year(datum_rod) |
++-----------------+
+|            1919 |
+|            1991 |
+|            1951 |
+|            1961 |
+|            1985 |
+|            1985 |
+|            1990 |
+|            1999 |
++-----------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT Year(datum_rod) AS 'Godina' FROM studenti COUNT(*) GROUP BY Godina, ORDER BY Godina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'COUNT(*) GROUP BY Godina, ORDER BY Godina' at line 1
+MariaDB [ins_bp]> SELECT Year(datum_rod) AS 'Godina', COUNT(*) FROM studenti GROUP BY Godina ORDER BY Godina;
++--------+----------+
+| Godina | COUNT(*) |
++--------+----------+
+|   1919 |        1 |
+|   1951 |        1 |
+|   1961 |        1 |
+|   1985 |        2 |
+|   1990 |        1 |
+|   1991 |        1 |
+|   1999 |        1 |
++--------+----------+
+7 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT drzava, COUNT(*) FROM drzava GROUP by drzava ORDER BY drzava;
+ERROR 1146 (42S02): Table 'ins_bp.drzava' doesn't exist
+MariaDB [ins_bp]> SELECT drzava, COUNT(*) FROM studenti GROUP by drzava ORDER BY drzava;
++--------+----------+
+| drzava | COUNT(*) |
++--------+----------+
+| AL     |        1 |
+| BH     |        2 |
+| CG     |        1 |
+| HR     |        1 |
+| MK     |        1 |
+| RS     |        1 |
+| SL     |        1 |
++--------+----------+
+7 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT drzava, COUNT(drzava) AS 'Ukupno' FROM studenti GROUP BY drzava HAVING Ukupno > 1;
++--------+--------+
+| drzava | Ukupno |
++--------+--------+
+| BH     |      2 |
++--------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT spol, COUNT(spol) AS 'Ukupno' FROM studenti GROUP BY spol HAVING spol = 'm';
++------+--------+
+| spol | Ukupno |
++------+--------+
+| m    |      7 |
++------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT spol, COUNT(spol) AS 'Ukupno' FROM studenti GROUP BY spol HAVING spol = 'z';
++------+--------+
+| spol | Ukupno |
++------+--------+
+| z    |      1 |
++------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email COUNT(uzina) FROM studenti;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'COUNT(uzina) FROM studenti' at line 1
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email, COUNT(uzina);
+ERROR 1054 (42S22): Unknown column 'ime_studenta' in 'field list'
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email, COUNT(uzina) FROM studenti;
++--------------+------------------+------------+--------------+
+| ime_studenta | prezime_studenta | email      | COUNT(uzina) |
++--------------+------------------+------------+--------------+
+| Mario        | Bosancic         | jako@m.com |            8 |
++--------------+------------------+------------+--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, count(uzina) from STUDENTI;
++--------------+--------------+
+| ime_studenta | count(uzina) |
++--------------+--------------+
+| Mario        |            8 |
++--------------+--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, count(*) from studenti;
++--------------+----------+
+| ime_studenta | count(*) |
++--------------+----------+
+| Mario        |        8 |
++--------------+----------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, COUNT(+) FROM studenti;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') FROM studenti' at line 1
+MariaDB [ins_bp]> SELECT uzina, COUNT(*) from studenti;
++-------+----------+
+| uzina | COUNT(*) |
++-------+----------+
+|  8.99 |        8 |
++-------+----------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, COUNT(*) from studenti group by uzina;
++-------+----------+
+| uzina | COUNT(*) |
++-------+----------+
+|   4.5 |        1 |
+|   6.8 |        1 |
+|  8.99 |        6 |
++-------+----------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, COUNT(*) FROM STUDENTI ORDER BY uzina having > 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'having > 3' at line 1
+MariaDB [ins_bp]> SELECT uzina, COUNT(*) FROM STUDENTI GROUP BY uzina having > 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '> 3' at line 1
+MariaDB [ins_bp]> SELECT uzina, COUNT(*) FROM STUDENTI GROUP BY uzina;
++-------+----------+
+| uzina | COUNT(*) |
++-------+----------+
+|   4.5 |        1 |
+|   6.8 |        1 |
+|  8.99 |        6 |
++-------+----------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT COUNT(uzina) as 'Uzina ukupno' FROM studenti;
++--------------+
+| Uzina ukupno |
++--------------+
+|            8 |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT COUNT(uzina) as 'ukupno uzina' FROM studenti;
++--------------+
+| ukupno uzina |
++--------------+
+|            8 |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, sum(uzina) as 'Cijena uzine' FROM studenti;
++--------------+------------------+-------------------+
+| ime_studenta | prezime_studenta | Cijena uzine      |
++--------------+------------------+-------------------+
+| Mario        | Bosancic         | 65.23999881744385 |
++--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, sum(uzina) as 'Cijena ukupne uzine' FROM studenti GROUP by 1 order by 2;
++-------+---------------------+
+| uzina | Cijena ukupne uzine |
++-------+---------------------+
+|   4.5 |                 4.5 |
+|   6.8 |   6.800000190734863 |
+|  8.99 |  53.939998626708984 |
++-------+---------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispiti           |
+| ocjene           |
+| odsutnost        |
+| predmeti         |
+| studenti         |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> desc ispiti;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| datum          | date             | NO   |     | NULL    |                |
+| vrsta_ispita   | enum('p','u')    | NO   |     | NULL    |                |
+| najvisa_ocjena | int(11)          | NO   |     | NULL    |                |
+| id             | int(10) unsigned | NO   |     | NULL    |                |
+| ispit_id       | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
++----------------+------------------+------+-----+---------+----------------+
+5 rows in set (0.03 sec)
+
+MariaDB [ins_bp]> desc ocjene;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| ispit_id   | int(10) unsigned | NO   | PRI | NULL    |       |
+| ocijena    | int(11)          | NO   |     | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> SELECT ispit_id as 'Ispit', MIN(ocijena) as min, MAX(Ocijena) as max, max(ocijena)-min(ocijena) as 'opseg', sum(ocijena) as ukupno, avg(ocijena) as prosijek FROM ocjene GROUP by ispit_id;
++-------+------+------+-------+--------+----------+
+| Ispit | min  | max  | opseg | ukupno | prosijek |
++-------+------+------+-------+--------+----------+
+|     1 |    9 |    9 |     0 |      9 |   9.0000 |
+|     2 |    8 |    8 |     0 |      8 |   8.0000 |
+|     3 |    9 |   10 |     1 |     19 |   9.5000 |
+|     4 |    8 |    8 |     0 |      8 |   8.0000 |
+|     5 |    4 |   10 |     6 |     14 |   7.0000 |
+|     6 |   10 |   10 |     0 |     10 |  10.0000 |
+|     8 |    3 |    8 |     5 |     11 |   5.5000 |
+|     9 |   10 |   10 |     0 |     10 |  10.0000 |
++-------+------+------+-------+--------+----------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+11 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, RAND(uzina) FROM studenti;
++-------+---------------------+
+| uzina | RAND(uzina)         |
++-------+---------------------+
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|   4.5 | 0.15595286540310166 |
+|   6.8 |  0.9065021936842261 |
++-------+---------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, RAND(uzina) FROM studenti;
++-------+---------------------+
+| uzina | RAND(uzina)         |
++-------+---------------------+
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|  8.99 |   0.406868412538309 |
+|   4.5 | 0.15595286540310166 |
+|   6.8 |  0.9065021936842261 |
++-------+---------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, RAND() FROM studenti;
++-------+----------------------+
+| uzina | RAND()               |
++-------+----------------------+
+|  8.99 |   0.3580534461495033 |
+|  8.99 |  0.38607330749376984 |
+|  8.99 |   0.8562062297539843 |
+|  8.99 |   0.1228112570222572 |
+|  8.99 | 0.045437626582977945 |
+|  8.99 |   0.8587543925817631 |
+|   4.5 |   0.1574591138935267 |
+|   6.8 |  0.21103242245598922 |
++-------+----------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, RAND() FROM studenti;
++-------+---------------------+
+| uzina | RAND()              |
++-------+---------------------+
+|  8.99 |  0.5827848013330109 |
+|  8.99 | 0.28082677003073203 |
+|  8.99 |  0.6557794768882724 |
+|  8.99 | 0.43641710508281095 |
+|  8.99 |  0.2147471254828825 |
+|  8.99 |  0.7644843428996245 |
+|   4.5 |  0.1781803687831204 |
+|   6.8 |  0.5974488459503733 |
++-------+---------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT uzina, RAND() FROM studenti;
++-------+---------------------+
+| uzina | RAND()              |
++-------+---------------------+
+|  8.99 |  0.4527031541361503 |
+|  8.99 | 0.47116926356327654 |
+|  8.99 |  0.9977368861415767 |
+|  8.99 |   0.575176670751699 |
+|  8.99 |  0.8826727260674095 |
+|  8.99 |  0.6878336488155962 |
+|   4.5 |   0.791150096609397 |
+|   6.8 |  0.8922495673338413 |
++-------+---------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
+|          3 | 2018-01-12 |
+|          3 | 2018-10-10 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DESCRIBE ocjene;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| ispit_id   | int(10) unsigned | NO   | PRI | NULL    |       |
+| ocijena    | int(11)          | NO   |     | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+MariaDB [ins_bp]> SELECT student_id, ispit_id WHERE student_id = 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE student_id = 2' at line 1
+MariaDB [ins_bp]> SELECT student_id, ispit_id FROM ocjene WHERE student_id = 2;
++------------+----------+
+| student_id | ispit_id |
++------------+----------+
+|          2 |        1 |
+|          2 |        3 |
+|          2 |        6 |
+|          2 |        8 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ISPIT;
+ERROR 1146 (42S02): Table 'ins_bp.ispit' doesn't exist
+MariaDB [ins_bp]> select * FROM ispiti;
++------------+--------------+----------------+----+----------+
+| datum      | vrsta_ispita | najvisa_ocjena | id | ispit_id |
++------------+--------------+----------------+----+----------+
+| 2018-04-13 | u            |              6 | 10 |        1 |
+| 2017-04-02 | u            |              8 |  3 |        2 |
+| 2018-01-09 | p            |             10 |  3 |        3 |
+| 2018-09-16 | u            |              6 |  3 |        4 |
+| 2018-10-10 | u            |              7 |  3 |        5 |
+| 2018-02-20 | p            |              3 |  1 |        6 |
+| 2018-07-08 | p            |              8 |  1 |        7 |
+| 2018-01-20 | p            |              9 |  8 |        8 |
++------------+--------------+----------------+----+----------+
+8 rows in set (0.01 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+11 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT student_id, ispit_id from ocjene WHERE student_id = 3;
++------------+----------+
+| student_id | ispit_id |
++------------+----------+
+|          3 |        4 |
+|          3 |        5 |
+|          3 |        9 |
++------------+----------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO ocjene values(3, 5, 9);
+ERROR 1062 (23000): Duplicate entry '5-3' for key 'PRIMARY'
+MariaDB [ins_bp]> INSERT INTO ocjene VALUES(3,5,10);
+ERROR 1062 (23000): Duplicate entry '5-3' for key 'PRIMARY'
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+11 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT into ocjene values(3,5,8);
+ERROR 1062 (23000): Duplicate entry '5-3' for key 'PRIMARY'
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
+|          3 | 2018-01-12 |
+|          3 | 2018-10-10 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> INSERT INTO ocjene (3, 6, 10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '3, 6, 10)' at line 1
+MariaDB [ins_bp]> INSERT INTO ocjene values(3,6,10);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM OCJENE;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          3 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+12 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> select student_id, ispit_id FROM ocjene WHERE student_id = 3;
++------------+----------+
+| student_id | ispit_id |
++------------+----------+
+|          3 |        4 |
+|          3 |        5 |
+|          3 |        6 |
+|          3 |        9 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM odsutnsot;
+ERROR 1146 (42S02): Table 'ins_bp.odsutnsot' doesn't exist
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
+|          3 | 2018-01-12 |
+|          3 | 2018-10-10 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DELETE FROM odsutnost WHERE datum REGEXP '2018-01-12';
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
+|          3 | 2018-10-10 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispiti           |
+| ocjene           |
+| odsutnost        |
+| predmeti         |
+| studenti         |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          3 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+12 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
+|          3 | 2018-10-10 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> DELETE FROM odsutnost WHERE student_id REGEXP '3';
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM odsutnost;
++------------+------------+
+| student_id | datum      |
++------------+------------+
+|          2 | 2018-09-16 |
++------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> DESC odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> ALTER table odsutnost
+    -> add column dosao CHAR(1) NOT NULL DEFAULT 'F' AFTER student_id;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> DESC odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| dosao      | char(1)          | NO   |     | F       |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+MariaDB [ins_bp]> ALERT table odsutnost MODIFY COLUMN dosao ENUM('T', 'F') DEFAUL 'F';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ALERT table odsutnost MODIFY COLUMN dosao ENUM('T', 'F') DEFAUL 'F'' at line 1
+MariaDB [ins_bp]> ALTER table odsutnost MODIFY COLUMN dosao ENUM('T', 'F') DEFAULT 'F';
+Query OK, 1 row affected (0.11 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> DESC odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| dosao      | enum('T','F')    | YES  |     | F       |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> ALERT TABLE odsutnost MODIFY COLUMN dosao ENUM('T', 'N') NOT NULL DEFAULT 'N';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ALERT TABLE odsutnost MODIFY COLUMN dosao ENUM('T', 'N') NOT NULL DEFAULT 'N'' at line 1
+MariaDB [ins_bp]> ALTER TABLE odsutnost MODIFY COLUMN dosao ENUM('T', 'N') NOT NULL DEFAULT 'N';
+Query OK, 1 row affected, 1 warning (0.11 sec)
+Records: 1  Duplicates: 0  Warnings: 1
+
+MariaDB [ins_bp]> DESC odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| dosao      | enum('T','N')    | NO   |     | N       |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> ALERT TABLE odsutnost drop column dosao;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ALERT TABLE odsutnost drop column dosao' at line 1
+MariaDB [ins_bp]> ALTER TABLE odsutnost
+    -> DROP COLUMN dosao;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [ins_bp]> DESC odsutnost;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| datum      | date             | NO   | PRI | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene WHERE STUDENT_ID = 4;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          4 |        5 |      10 |
++------------+----------+---------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |      10 |
+|          3 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+12 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> UPDATE ocjene SET ocijena = 6 WHERE student_id = 2 AND ispit_id = 6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [ins_bp]> SELECT * FROM ocijene;
+ERROR 1146 (42S02): Table 'ins_bp.ocijene' doesn't exist
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |       6 |
+|          3 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+12 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, datum_rod
+    -> FROM studenti
+    -> WHERE datum_rod
+    -> BETWEEN '1991-01-01' AND '2000-01-01';
++--------------+------------------+------------+
+| ime_studenta | prezime_studenta | datum_rod  |
++--------------+------------------+------------+
+| Postoo       | Hajos            | 1991-05-19 |
+| Ruzica       | Pulnikovic       | 1999-09-06 |
++--------------+------------------+------------+
+2 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta, email, datum_rod
+    -> FROM STUDENTI
+    -> WHERE uzina
+    -> BETWEEN 3 AND 9;
++--------------+------------------+--------------------+------------+
+| ime_studenta | prezime_studenta | email              | datum_rod  |
++--------------+------------------+--------------------+------------+
+| Mario        | Bosancic         | jako@m.com         | 1919-05-19 |
+| Postoo       | Hajos            | ghko@m.com         | 1991-05-19 |
+| Terpo        | Zepro            | uiko@m.com         | 1951-05-19 |
+| Makedonce    | Serpoce          | mk@macedonia.com   | 1961-05-19 |
+| Georte       | Tvro             | crnogorce@mail.com | 1985-01-10 |
+| Xavmo        | Nevmo            | sipal@mail.com     | 1985-11-10 |
+| Tihomir      | Crnomic          | tcrmic@mail.com    | 1990-01-29 |
+| Ruzica       | Pulnikovic       | ruzinmail@hr.com   | 1999-09-06 |
++--------------+------------------+--------------------+------------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta, ' ', email, ' ' datum_rod) AS 'Student info' FROM studenti WHERE uzina BETWEEN 3 AND 5;
+ERROR 1583 (42000): Incorrect parameters in the call to native function 'CONCAT'
+MariaDB [ins_bp]> SELECT CONCAT(ime_studenta, ' ', prezime_studenta, ' ', email, ' ', datum_rod) AS 'Informacije o studentu' FROM studenti WHERE uzina BETWEEN 3 AND 5;
++--------------------------------------------+
+| Informacije o studentu                     |
++--------------------------------------------+
+| Tihomir Crnomic tcrmic@mail.com 1990-01-29 |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, uzina FROM STUDENTI;
++--------------+-------+
+| ime_studenta | uzina |
++--------------+-------+
+| Mario        |  8.99 |
+| Postoo       |  8.99 |
+| Terpo        |  8.99 |
+| Makedonce    |  8.99 |
+| Georte       |  8.99 |
+| Xavmo        |  8.99 |
+| Tihomir      |   4.5 |
+| Ruzica       |   6.8 |
++--------------+-------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ime_studenta, prezime_studenta FROM studenti WHERE drzava IN ('BH', 'HR', 'AL');
++--------------+------------------+
+| ime_studenta | prezime_studenta |
++--------------+------------------+
+| Mario        | Bosancic         |
+| Xavmo        | Nevmo            |
+| Tihomir      | Crnomic          |
+| Ruzica       | Pulnikovic       |
++--------------+------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT prezime_studenta FROM studenti WHERE prezime_studenta IN ('Nevmo', 'Crnomic', 'Bosancic');
++------------------+
+| prezime_studenta |
++------------------+
+| Bosancic         |
+| Nevmo            |
+| Crnomic          |
++------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SHOW TABELS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'TABELS' at line 1
+MariaDB [ins_bp]> SHOW TABLES;
++------------------+
+| Tables_in_ins_bp |
++------------------+
+| ispiti           |
+| ocjene           |
+| odsutnost        |
+| predmeti         |
+| studenti         |
++------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> desc ispiti;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| datum          | date             | NO   |     | NULL    |                |
+| vrsta_ispita   | enum('p','u')    | NO   |     | NULL    |                |
+| najvisa_ocjena | int(11)          | NO   |     | NULL    |                |
+| id             | int(10) unsigned | NO   |     | NULL    |                |
+| ispit_id       | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
++----------------+------------------+------+-----+---------+----------------+
+5 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> desc ocjene;
++------------+------------------+------+-----+---------+-------+
+| Field      | Type             | Null | Key | Default | Extra |
++------------+------------------+------+-----+---------+-------+
+| student_id | int(10) unsigned | NO   | PRI | NULL    |       |
+| ispit_id   | int(10) unsigned | NO   | PRI | NULL    |       |
+| ocijena    | int(11)          | NO   |     | NULL    |       |
++------------+------------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+MariaDB [ins_bp]> SELECT student_id, datum, ocijena, najvisa_ocjena
+    -> FROM ispiti, ocjene
+    -> WHERE datum = "2019-01-03"
+    -> AND ispiti.ispit_id = ocjene.ispit_id;
+Empty set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ispiti;
++------------+--------------+----------------+----+----------+
+| datum      | vrsta_ispita | najvisa_ocjena | id | ispit_id |
++------------+--------------+----------------+----+----------+
+| 2018-04-13 | u            |              6 | 10 |        1 |
+| 2017-04-02 | u            |              8 |  3 |        2 |
+| 2018-01-09 | p            |             10 |  3 |        3 |
+| 2018-09-16 | u            |              6 |  3 |        4 |
+| 2018-10-10 | u            |              7 |  3 |        5 |
+| 2018-02-20 | p            |              3 |  1 |        6 |
+| 2018-07-08 | p            |              8 |  1 |        7 |
+| 2018-01-20 | p            |              9 |  8 |        8 |
++------------+--------------+----------------+----+----------+
+8 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT student_id, datum, ocijena, najvisa_ocjena
+    -> FROM ispiti, ocjene
+    -> WHERE datum BETWEEN '2018-01-01' AND '2018-05-10'
+    -> AND ispiti.ispit_id = ocjene.ispit_id;
++------------+------------+---------+----------------+
+| student_id | datum      | ocijena | najvisa_ocjena |
++------------+------------+---------+----------------+
+|          2 | 2018-04-13 |       9 |              6 |
+|          1 | 2018-01-09 |       9 |             10 |
+|          2 | 2018-01-09 |      10 |             10 |
+|          2 | 2018-02-20 |       6 |              3 |
+|          3 | 2018-02-20 |      10 |              3 |
+|          1 | 2018-01-20 |       3 |              9 |
+|          2 | 2018-01-20 |       8 |              9 |
++------------+------------+---------+----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT * FROM ocjene;
++------------+----------+---------+
+| student_id | ispit_id | ocijena |
++------------+----------+---------+
+|          2 |        1 |       9 |
+|          1 |        2 |       8 |
+|          1 |        3 |       9 |
+|          2 |        3 |      10 |
+|          3 |        4 |       8 |
+|          3 |        5 |       4 |
+|          4 |        5 |      10 |
+|          2 |        6 |       6 |
+|          3 |        6 |      10 |
+|          1 |        8 |       3 |
+|          2 |        8 |       8 |
+|          3 |        9 |      10 |
++------------+----------+---------+
+12 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT ocjene.student_id, ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocjena
+    -> FROM ispiti, ocjena
+    -> WHERE datum BETWEEN '2018-01-10' AND '2018-04-09'
+    -> AND ispiti.ispit_id = ocjene.ispit_id;
+ERROR 1146 (42S02): Table 'ins_bp.ocjena' doesn't exist
+MariaDB [ins_bp]> SELECT ocjene.student_id, ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocjena
+    -> FROM ispiti, ocjene
+    -> WHERE datum BETWEEN '2018-01-10' AND '2018-04-09'
+    -> AND ispiti.ispit_id = ocjene.ispit_id;
++------------+------------+---------+----------------+
+| student_id | datum      | ocijena | najvisa_ocjena |
++------------+------------+---------+----------------+
+|          2 | 2018-02-20 |       6 |              3 |
+|          3 | 2018-02-20 |      10 |              3 |
+|          1 | 2018-01-20 |       3 |              9 |
+|          2 | 2018-01-20 |       8 |              9 |
++------------+------------+---------+----------------+
+4 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS 'Ime i prezime'
+    -> ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocijena
+    -> FROM ispiti, ocjena, studenti
+    -> WHERE datum BETWEEN '2018-01-04' AND '2018-04-28'
+    -> AND ispiti.ispit_id = ocjena.ispit_id
+    -> AND ocjene.student_id = studenti.student_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocijena
+FROM ispiti, ocjena, studen' at line 2
+MariaDB [ins_bp]> SELECT CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS 'Ime i prezime'
+    -> ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocijena
+    -> FROM ispiti, ocjene, studenti
+    -> WHERE datum BETWEEN '2018-01-04' AND '2018-04-28'
+    -> AND ispiti.ispit_id = ocjene.ispit_id
+    -> AND ocjene.student_id = studenti.student_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocijena
+FROM ispiti, ocjene, studen' at line 2
+MariaDB [ins_bp]> SELECT CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS 'Ime i prezime'
+    -> , ispiti.datum, ocjene.ocijena, ispiti.najvisa_ocjena
+    -> FROM ispiti, ocjene, studenti
+    -> WHERE datum BETWEEN '2018-01-10' AND '2018-04-29'
+    -> AND ispiti.ispit_id = ocjene.ispit_id
+    -> AND ocjene.student_id = studenti.student_id;
++----------------+------------+---------+----------------+
+| Ime i prezime  | datum      | ocijena | najvisa_ocjena |
++----------------+------------+---------+----------------+
+| Postoo Hajos   | 2018-04-13 |       9 |              6 |
+| Postoo Hajos   | 2018-02-20 |       6 |              3 |
+| Terpo Zepro    | 2018-02-20 |      10 |              3 |
+| Mario Bosancic | 2018-01-20 |       3 |              9 |
+| Postoo Hajos   | 2018-01-20 |       8 |              9 |
++----------------+------------+---------+----------------+
+5 rows in set (0.00 sec)
+
+MariaDB [ins_bp]> SELECT studenti.student_id, CONCAT("studenti.ime_studenta, ' ', studenti.prezime.studenta) AS Ime,
+    "> COUNT(odsutnost.datum) AS Odsutnost
+    "> FROM studenti, odsutnost
+    "> WHERE studenti.student_id = odsutnost.student_id
+    "> GROUP BY studenti.student_id;
+    "> asd
+    ">
+    "> v
+    "> ;
+    "> ;);
+    "> Ctrl-C -- exit!
+Bye
+
+C:\xampp\mysql\bin>mysql -u root -p -h 127.0.0.1
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 211
+Server version: 10.1.31-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> USE INS_pb;
+ERROR 1049 (42000): Unknown database 'ins_pb'
+MariaDB [(none)]> use int_pb;
+ERROR 1049 (42000): Unknown database 'int_pb'
+MariaDB [(none)]> SHOW DATABASES
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| bravo              |
+| cms                |
+| cmstc              |
+| datasens           |
+| drugadatabase      |
+| fakultet           |
+| information_schema |
+| ins_bp             |
+| ispitsql           |
+| knjiznica          |
+| logbaz             |
+| mysql              |
+| novadb             |
+| pdo_db             |
+| performance_schema |
+| php2018            |
+| phpmyadmin         |
+| sec_log            |
+| skladiste          |
+| skladiste2         |
+| turnir             |
+| videoteka          |
+| zaposlenici        |
++--------------------+
+23 rows in set (0.00 sec)
+
+MariaDB [(none)]> use INS_BP;
+Database changed
+MariaDB [INS_BP]> SELECT studenti.student.id, CONCAT(studenti.ime.studenta, " ", studenti.prezime_studenta) AS Ime,
+    -> COUNT(odsutnost.datum) AS Odsutni
+    -> FROM studenti, odsutnost
+    -> WHERE studenti.student_id = odsutnost.student_id
+    -> GROUP by studenti.student_id;
+ERROR 1054 (42S22): Unknown column 'studenti.student.id' in 'field list'
+MariaDB [INS_BP]> SELECT studenti.student_id, CONCAT(studenti.ime.studenta, " ", studenti.prezime_studenta) AS Ime,
+    -> COUNT(odsutnost.datum) AS Odsutni
+    -> FROM studenti, odsutnost
+    -> WHERE studenti.student_id = odsutnost.student_id
+    -> GROUP by studenti.student_id;
+ERROR 1054 (42S22): Unknown column 'studenti.ime.studenta' in 'field list'
+MariaDB [INS_BP]> SELECT studenti.student.id, CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS Ime,
+    -> COUNT(odsutnost.datum) AS Odsutni
+    -> FROM studenti, odsutnost
+    -> WHERE studenti.student_id = odsutnost.student_id
+    -> GROUP by studenti.student_id;
+ERROR 1054 (42S22): Unknown column 'studenti.student.id' in 'field list'
+MariaDB [INS_BP]> SELECT studenti.student_id, CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS Ime,
+    -> FROM studenti, odsutnost
+    -> WHERE studenti.student_id = odsutnost.student_id
+    -> GROUP by studenti_student_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM studenti, odsutnost
+WHERE studenti.student_id = odsutnost.student_id
+GROUP ' at line 2
+MariaDB [INS_BP]> SELECT studenti.student_id,
+    -> CONCAT(studenti.ime_studenta, " ", studenti.prezime_studenta) AS Ime,
+    -> COUNT(odsutnost.datum) as Odsutni
+    -> FROM studenti, odsutnost
+    -> WHERE studenti.student_id = odsutnost.student_id
+    -> GROUP BY studenti.student_id;
++------------+--------------+---------+
+| student_id | Ime          | Odsutni |
++------------+--------------+---------+
+|          2 | Postoo Hajos |       1 |
++------------+--------------+---------+
+1 row in set (0.00 sec)
+
+MariaDB [INS_BP]> SELECT studenti.student_id,
+    -> CONCAT(studenti.ime_studenta," ", studenti.prezime_studenta) AS 'Puno ime i prezime studenta',
+    -> COUNT(odsutnost.datum) as Odsutni
+    -> FROM studenti LEFT JOIN odsutnost
+    -> ON studenti.student_id = odsutnost.student_id
+    -> GROUP BY studenti.student_id;
++------------+-----------------------------+---------+
+| student_id | Puno ime i prezime studenta | Odsutni |
++------------+-----------------------------+---------+
+|          1 | Mario Bosancic              |       0 |
+|          2 | Postoo Hajos                |       1 |
+|          3 | Terpo Zepro                 |       0 |
+|          4 | Makedonce Serpoce           |       0 |
+|          5 | Georte Tvro                 |       0 |
+|          6 | Xavmo Nevmo                 |       0 |
+|          7 | Tihomir Crnomic             |       0 |
+|          8 | Ruzica Pulnikovic           |       0 |
++------------+-----------------------------+---------+
+8 rows in set (0.00 sec)
+
+MariaDB [INS_BP]> SELECT studenti.ime_studenta,
+    -> studenti.prezime_studenta,
+    -> ocjene.ispit_id,
+    -> ocjene.ocijena
+    -> FROM studenti
+    -> INNER JOIN ocjene
+    -> ON studenti.student_id = ocjene.student_id
+    -> WHERE ocjene.ocijena <= 5
+    -> ORDER BY ocjena.ispit_id;
+ERROR 1054 (42S22): Unknown column 'ocjena.ispit_id' in 'order clause'
+MariaDB [INS_BP]> SELECT studenti.ime_studenta,
+    -> studenti.prezime_studenta,
+    -> ocjene.ispit_id,
+    -> ocjene.ocijena
+    -> FROM studenti INNER JOIN ocjene
+    -> ON studenti.student_id = ocjene.student_id
+    -> WHERE ocjene.ocijena <=7
+    -> ORDER BY ocjene.ispit_id;
++--------------+------------------+----------+---------+
+| ime_studenta | prezime_studenta | ispit_id | ocijena |
++--------------+------------------+----------+---------+
+| Terpo        | Zepro            |        5 |       4 |
+| Postoo       | Hajos            |        6 |       6 |
+| Mario        | Bosancic         |        8 |       3 |
++--------------+------------------+----------+---------+
+3 rows in set (0.00 sec)
+
+MariaDB [INS_BP]> SELECT studenti.ime_studenta, studenti.prezime_studenta
+    -> ocjene.ispit_id, ocjene.ocijena FROM studenti INNER JOIN ocjene
+    -> ON studenti.student_id = ocjene.student_id WHERE ocjene.ocijena > 6
+    -> ORDER BY ocjene.ispit_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.ispit_id, ocjene.ocijena FROM studenti INNER JOIN ocjene
+ON studenti.student_id' at line 2
+MariaDB [INS_BP]> SELECT studenti.ime_studenta, studenti.prezime_studenta, ocjene.ispit_id, ocjene.ocijena FROM studenti
+    -> INNER JOIN ocjene ON studenti.student_id = ocjene.student_id WHERE ocjene.ocijena > 6
+    -> ORDER BY ocjene.ispit_id;
++--------------+------------------+----------+---------+
+| ime_studenta | prezime_studenta | ispit_id | ocijena |
++--------------+------------------+----------+---------+
+| Postoo       | Hajos            |        1 |       9 |
+| Mario        | Bosancic         |        2 |       8 |
+| Mario        | Bosancic         |        3 |       9 |
+| Postoo       | Hajos            |        3 |      10 |
+| Terpo        | Zepro            |        4 |       8 |
+| Makedonce    | Serpoce          |        5 |      10 |
+| Terpo        | Zepro            |        6 |      10 |
+| Postoo       | Hajos            |        8 |       8 |
+| Terpo        | Zepro            |        9 |      10 |
++--------------+------------------+----------+---------+
+9 rows in set (0.00 sec)
